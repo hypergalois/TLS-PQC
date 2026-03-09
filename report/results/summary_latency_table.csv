@@ -1,0 +1,5 @@
+scenario,label,N,mean_ms,std_ms,min_ms,p50_ms,p75_ms,p90_ms,p95_ms,p99_ms,max_ms,overhead_mean_vs_C1_pct,overhead_p99_vs_C1_pct
+c1_classic,"C1 – X25519, cert clásico",100000,1.492,0.63,0.684,1.392,1.67,2.03,2.315,3.063,45.554,0.0,0.0
+c2_hybrid_classiccert,"C2 – X25519MLKEM768, cert clásico",100000,1.89,0.694,0.839,1.775,2.112,2.562,2.879,3.766,37.768,26.652,22.951
+c3_classic_pqcert,"C3 – X25519, cert PQC",100000,1.311,0.422,0.682,1.221,1.507,1.779,1.969,2.685,27.193,-12.114,-12.341
+c4_hybrid_pqcert,"C4 – X25519MLKEM768, cert PQC",100000,1.49,0.49,0.858,1.363,1.68,2.013,2.27,3.058,31.729,-0.135,-0.164
