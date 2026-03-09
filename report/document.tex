@@ -1,0 +1,140 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage[]{float}
+\usepackage{caption}
+\usepackage{makecell}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	urlcolor=blue,
+	citecolor=black
+}
+
+\title{Resumen del experimento TLS 1.3 PQC}
+\author{José Luis Delgado Jiménez}
+\date{\today}
+
+\begin{document}
+	\maketitle
+	
+	\section{Objetivo y alcance}
+	
+	Se han medido cuatro configuraciones de handshake TLS:
+	
+	\begin{itemize}
+		\item C1: X25519 + certificado ECDSA clásico.
+		\item C2: X25519MLKEM768 (híbrido) + certificado ECDSA clásico.
+		\item C3: X25519 + certificado PQC (ML-DSA).
+		\item C4: X25519MLKEM768 (híbrido) + certificado PQC.
+	\end{itemize}
+	
+	Para cada escenario se han ejecutado \(N=100\,000\) handshakes sobre localhost, registrando latencias, volumen de datos y tiempo de CPU (task-clock) mediante perf stat.
+
+	\section{Configuración experimental (resumen)}
+	
+	\begin{itemize}
+		\item Stack criptográfico: OpenSSL 3 + oqsprovider.
+		\item Servidor TLS: openssl s\_server con configuración específica por escenario.
+		\item Cliente de prueba: tls\_bench\_client, que realiza \(N\) handshakes consecutivos y genera CSV con:
+		\texttt{run\_id, elapsed\_ms, success, ssl\_error, bytes\_read, bytes\_written}.
+		\item Métrica CPU: perf stat -x, -e task-clock, normalizada por handshake.
+	\end{itemize}
+	
+	\section{Resultados}
+	
+	\subsection{Tamaño de certificados y claves}
+	
+	\begin{table}[H]
+		\centering
+		\caption{Tamaños de certificados y claves utilizadas.}
+		\label{tab:cert_sizes_short}
+		\input{results/summary_cert_sizes.tex}
+	\end{table}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{results/cert_sizes_bar.png}
+		\caption{Tamaño de certificados X.509 clásicos vs post-cuánticos}
+		\label{fig:cert_sizes_short}
+	\end{figure}
+	
+	\subsection{Tamaño medio de handshake TLS 1.3}
+	
+	\begin{table}[H]
+		\centering
+		\caption{Tamaño medio del handshake TLS 1.3 por escenario}
+		\label{tab:hs_size_short}
+		\input{results/summary_handshake_size_table.tex}
+	\end{table}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{results/handshake_size_bar.png}
+		\caption{Tamaño medio de handshake TLS 1.3 (bytes leídos vs escritos)}
+		\label{fig:hs_size_bar_short}
+	\end{figure}
+	
+	\subsection{Latencias de handshake}
+	
+	\begin{table}[H]
+		\centering
+		\caption{Estadísticos de latencia de handshake TLS 1.3 en ms.}
+		\label{tab:latency_short}
+		\input{results/summary_latency_table.tex}
+	\end{table}
+	
+	\vspace*{4em}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{results/latency_boxplot.png}
+		\caption{Distribución de latencias de handshake TLS 1.3 por escenario}
+		\label{fig:latency_boxplot_short}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{results/latency_cdf.png}
+		\caption{Funciones de distribución acumulada (CDF) de latencia}
+		\label{fig:latency_cdf_short}
+	\end{figure}
+	
+	\vspace*{5em}
+	
+	\subsection{Tiempo de CPU por handshake}
+	
+	\begin{table}[H]
+		\centering
+		\caption{Tiempo de CPU (task-clock) y tamaño medio de handshake}
+		\label{tab:cpu_short}
+		\input{results/summary_size_cpu_table.tex}
+	\end{table}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{results/cpu_time_per_handshake_bar.png}
+		\caption{Tiempo de CPU por handshake TLS 1.3 (baseline C1)}
+		\label{fig:cpu_bar_short}
+	\end{figure}
+	
+		\vspace*{3em}
+	
+	\section{Resumen}
+	
+	\begin{itemize}
+		\item Los certificados y claves PQC ocupan aproximadamente un orden de magnitud más que los clásicos (del orden de 0{,}6~KiB frente a 7--8~KiB por certificado/clave).
+		\item El tamaño medio del handshake TLS 1.3 pasa de unos 1{,}7~KiB en el escenario clásico (C1) a aproximadamente 4~KiB en el escenario híbrido con certificado clásico (C2) y a unos 15--17~KiB en los escenarios con certificados PQC (C3, C4).
+		\item Las latencias de handshake se sitúan, según tabla \ref{tab:latency_short}, en torno a 1{,}3--1{,}9~ms de media, con percentiles 99 en el entorno de 3~ms.
+		\item El tiempo de CPU por handshake se incrementa aproximadamente un 24\% en el escenario híbrido con certificado clásico (C2) y se mantiene similar o algo por debajo del clásico en los escenarios con certificado PQC (C3, C4), según tabla \ref{tab:cpu_short} y figura \ref{fig:cpu_bar_short}.
+	\end{itemize}
+	
+\end{document}

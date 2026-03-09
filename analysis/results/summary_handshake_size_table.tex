@@ -1,0 +1,11 @@
+\begin{tabular}{llrrrr}
+\toprule
+ & label & bytes_read_mean & bytes_written_mean & handshake_bytes_mean & handshake_bytes_std_approx \\
+scenario &  &  &  &  &  \\
+\midrule
+c1_classic & C1 – X25519, cert clásico & 1318.000000 & 402.000000 & 1720.000000 & 0.700000 \\
+c2_hybrid_classiccert & C2 – X25519MLKEM768, cert clásico & 2406.000000 & 1578.000000 & 3984.000000 & 0.700000 \\
+c3_classic_pqcert & C3 – X25519, cert PQC & 14787.000000 & 398.000000 & 15185.000000 & 0.000000 \\
+c4_hybrid_pqcert & C4 – X25519MLKEM768, cert PQC & 15875.000000 & 1574.000000 & 17449.000000 & 0.000000 \\
+\bottomrule
+\end{tabular}

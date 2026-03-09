@@ -1,0 +1,11 @@
+\begin{tabular}{llrrrrrl}
+\toprule
+ & label & bytes_read_mean & bytes_written_mean & task_clock_total & task_clock_per_hs & overhead_cpu_per_hs_vs_C1_pct & task_clock_unit \\
+scenario &  &  &  &  &  &  &  \\
+\midrule
+c1_classic & C1 – X25519, cert clásico & 1317.994000 & 402.000000 & 105561318502.000000 & 1055613.185000 & 0.000000 & NaN \\
+c2_hybrid_classiccert & C2 – X25519MLKEM768, cert clásico & 2405.995000 & 1578.000000 & 130599317990.000000 & 1305993.180000 & 23.719000 & NaN \\
+c3_classic_pqcert & C3 – X25519, cert PQC & 14787.000000 & 398.000000 & 94555320627.000000 & 945553.206000 & -10.426000 & NaN \\
+c4_hybrid_pqcert & C4 – X25519MLKEM768, cert PQC & 15875.000000 & 1574.000000 & 103511037169.000000 & 1035110.372000 & -1.942000 & NaN \\
+\bottomrule
+\end{tabular}

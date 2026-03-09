@@ -1,0 +1,5 @@
+scenario,label,bytes_read_mean,bytes_written_mean,task_clock_total,task_clock_per_hs,overhead_cpu_per_hs_vs_C1_pct,task_clock_unit
+c1_classic,"C1 – X25519, cert clásico",1317.994,402.0,105561318502.0,1055613.185,0.0,
+c2_hybrid_classiccert,"C2 – X25519MLKEM768, cert clásico",2405.995,1578.0,130599317990.0,1305993.18,23.719,
+c3_classic_pqcert,"C3 – X25519, cert PQC",14787.0,398.0,94555320627.0,945553.206,-10.426,
+c4_hybrid_pqcert,"C4 – X25519MLKEM768, cert PQC",15875.0,1574.0,103511037169.0,1035110.372,-1.942,
