@@ -1,0 +1,23 @@
+\begin{tabular}{lrrr}
+	\toprule
+	scenario & bytes\_read\_mean & bytes\_written\_mean & task\_clock\_total \\
+	\midrule
+	c1\_classic & 1317.994 & 402 & 1.056e11 \\
+	c2\_hybrid\_classiccert & 2405.995 & 1578 & 1.306e11 \\
+	c3\_classic\_pqcert & 14787 & 398 & 9.456e10 \\
+	c4\_hybrid\_pqcert & 15875 & 1574 & 1.035e11 \\
+	\bottomrule
+\end{tabular}
+
+\vspace{1em}
+
+\begin{tabular}{rr}
+	\toprule
+	task\_clock\_per\_hs & overhead\_cpu\_per\_hs\_vs\_C1\_\% \\
+	\midrule
+	1055613.185 & 0.000 \\
+	1305993.180 & 23.719 \\
+	945553.206 & -10.426 \\
+	1035110.372 & -1.942 \\
+	\bottomrule
+\end{tabular}
